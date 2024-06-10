@@ -61,20 +61,19 @@ var LearningHeader = function LearningHeader(_ref2) {
   }, courseOrg, " ", courseNumber), /*#__PURE__*/React.createElement("span", {
     className: "d-block m-0 font-weight-bold course-title"
   }, courseTitle)), /*#__PURE__*/React.createElement("nav", {
-    className: "ml-auto d-flex align-items-center"
-  }, /*#__PURE__*/React.createElement(Link, {
+    className: "mr-auto d-flex align-items-center"
+}, /*#__PURE__*/React.createElement("a", {
     className: "nav-link",
-    to: "/courses"
-  }, "Courses"), /*#__PURE__*/React.createElement(Link, {
+    href: "https://undp-lms.kashida-learning.co/"
+}, "Home Page"), /*#__PURE__*/React.createElement("a", {
     className: "nav-link",
-    to: "/about"
-  }, "About"), /*#__PURE__*/React.createElement(Link, {
+    href: "https://undp-lms.kashida-learning.co/about"
+}, "About Acinet"), /*#__PURE__*/React.createElement("a", {
     className: "nav-link",
-    to: "/custom-page"
-  }, "Custom Page")), showUserDropdown && authenticatedUser && /*#__PURE__*/React.createElement(AuthenticatedUserDropdown, {
+    href: "https://undp-lms.kashida-learning.co/courses"
+}, "Courses")), showUserDropdown && authenticatedUser && /*#__PURE__*/React.createElement(AuthenticatedUserDropdown, {
     username: authenticatedUser.username
-  }), showUserDropdown && !authenticatedUser && /*#__PURE__*/React.createElement(AnonymousUserMenu, null)));
-};
+}), showUserDropdown && !authenticatedUser && /*#__PURE__*/React.createElement(AnonymousUserMenu, null)));
 LearningHeader.propTypes = {
   courseOrg: PropTypes.string,
   courseNumber: PropTypes.string,
