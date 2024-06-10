@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
+import { Link } from 'react-router-dom';  // Import Link for navigation
 
 import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
@@ -48,6 +49,14 @@ const LearningHeader = ({
           <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
+
+        <nav className="ml-auto d-flex align-items-center">
+          <Link className="nav-link" to="/courses">Courses</Link>
+          <Link className="nav-link" to="/about">About</Link>
+          <Link className="nav-link" to="/custom-page">Custom Page</Link>
+        </nav>
+
+        
         {showUserDropdown && authenticatedUser && (
         <AuthenticatedUserDropdown
           username={authenticatedUser.username}
