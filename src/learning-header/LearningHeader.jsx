@@ -48,6 +48,20 @@ const LearningHeader = ({
           <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
+
+        <nav className="mr-auto custom-nav">
+          <a className="nav-link" href="https://undp-lms.kashida-learning.co/">
+            {intl.formatMessage({ id: 'header.links.home' })}
+          </a>
+          <a className="nav-link" href="https://undp-lms.kashida-learning.co/about">
+            {intl.formatMessage({ id: 'header.links.aboutAcinet' })}
+          </a>
+          <a className="nav-link" href="https://undp-lms.kashida-learning.co/courses">
+            {intl.formatMessage({ id: 'header.links.courses' })}
+          </a>
+        </nav>
+
+
         {showUserDropdown && authenticatedUser && (
           <AuthenticatedUserDropdown
             username={authenticatedUser.username}

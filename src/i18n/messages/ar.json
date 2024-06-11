@@ -1,7 +1,6 @@
 {
   "general.register.sentenceCase": "التسجيل",
   "general.signIn.sentenceCase": "تسجيل الدخول",
-  "header.links.courses": "المساقات",
   "header.links.programs": "البرامج",
   "header.links.content.search": "اكتشف الجديد",
   "header.links.schools": "المدارس و الشركاء",
@@ -29,5 +28,8 @@
   "header.menu.account.label": "الحساب",
   "header.menu.orderHistory.label": "سجل الطلبيات",
   "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي",
-  "header.menu.signOut.label": "تسجيل الخروج"
+  "header.menu.signOut.label": "تسجيل الخروج",
+  "header.links.home": "الصفحة الرئيسية",
+  "header.links.aboutAcinet": "حول أسينت",
+  "header.links.courses": "الدورات"
 }
