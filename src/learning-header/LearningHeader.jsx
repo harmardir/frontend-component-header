@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';  // Added useState here
 import PropTypes from 'prop-types';
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -7,6 +7,8 @@ import { AppContext } from '@edx/frontend-platform/react';
 import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
+
+import BurgerMenu from './BurgerMenu'; // Import the BurgerMenu component
 
 const LinkedLogo = ({
   href,
@@ -29,6 +31,11 @@ const LearningHeader = ({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
+  const [isNavVisible, setIsNavVisible] = useState(false); // State to manage nav visibility
+
+  const toggleNav = () => {
+    setIsNavVisible(!isNavVisible);
+  };
 
   const headerLogo = (
     <LinkedLogo
@@ -48,6 +55,19 @@ const LearningHeader = ({
           <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
+        <BurgerMenu onClick={toggleNav} />
+        <nav className={`ml-auto custom-nav ${isNavVisible ? 'show' : ''}`}>
+        <a className="nav-link" href="https://undp-lms.kashida-learning.co/" onClick={toggleNav}>
+    {intl.formatMessage({ id: 'header.links.home', defaultMessage: 'Home' })}
+  </a>
+  <a className="nav-link" href="https://undp-lms.kashida-learning.co/about" onClick={toggleNav}>
+    {intl.formatMessage({ id: 'header.links.about', defaultMessage: 'About Us' })}
+  </a>
+  <a className="nav-link" href="https://undp-lms.kashida-learning.co/courses" onClick={toggleNav}>
+    {intl.formatMessage({ id: 'header.links.courses', defaultMessage: 'Courses' })}
+  </a>
+    </nav>
+        
         {showUserDropdown && authenticatedUser && (
           <AuthenticatedUserDropdown
             username={authenticatedUser.username}
