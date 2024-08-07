@@ -36,6 +36,16 @@ const Header = ({ intl }) => {
   const mainMenu = [
     {
       type: 'item',
+      href: `${config.LMS_BASE_URL}`, // Homepage
+      content: intl.formatMessage(messages['header.links.home']),
+    },
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/about`, // About page
+      content: intl.formatMessage(messages['header.links.about']),
+    },
+    {
+      type: 'item',
       href: `${config.LMS_BASE_URL}/dashboard`,
       content: intl.formatMessage(messages['header.links.courses']),
     },
