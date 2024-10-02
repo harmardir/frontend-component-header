@@ -1,10 +1,32 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  'header.links.courses': {
-    id: 'header.links.courses',
-    defaultMessage: 'Courses',
-    description: 'Link to the learner course dashboard',
+  'header.links.home': { 
+    id: 'header.links.home', 
+    defaultMessage: 'Home', 
+    description: 'Label for the Home link in the header' 
+  }, 
+
+  'header.links.about': { 
+    id: 'header.links.about', 
+    defaultMessage: 'About', 
+    description: 'Label for the About link in the header' 
+  }, 
+
+  'header.links.courses': { 
+    id: 'header.links.courses', 
+    defaultMessage: 'Courses', 
+    description: 'Link to the learner course dashboard' 
+  }, 
+  'header.links.coursesForStudents': {
+    id: 'header.links.coursesForStudents',
+    defaultMessage: 'Courses For Students',
+    description: 'Link to the courses for students',
+  },
+  'header.links.coursesForEmployees': {
+    id: 'header.links.coursesForEmployees',
+    defaultMessage: 'Courses For Employees',
+    description: 'Link to the courses for employees',
   },
   'header.links.programs': {
     id: 'header.links.programs',

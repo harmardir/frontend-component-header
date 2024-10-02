@@ -45,9 +45,20 @@ const Header = ({ intl }) => {
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      type: 'dropdown', // The "Courses" item is a dropdown
       content: intl.formatMessage(messages['header.links.courses']),
+      subItems: [ // Sub-menu for "Courses"
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
+          content: intl.formatMessage(messages['header.links.coursesForStudents']),
+        },
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
+          content: intl.formatMessage(messages['header.links.coursesForEmployees']),
+        },
+      ],
     },
   ];
 
@@ -80,7 +91,7 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
+  // Users should only see Order History if they have an ORDER_HISTORY_URL defined in the environment.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
