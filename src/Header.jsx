@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react'; // Import useState for dropdown handling
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -32,6 +32,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false); // State to handle dropdown visibility
 
   const mainMenu = [
     {
@@ -45,9 +46,21 @@ const Header = ({ intl }) => {
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      type: 'dropdown', // Add dropdown type for Courses
       content: intl.formatMessage(messages['header.links.courses']),
+      onClick: () => setCoursesDropdownOpen(!coursesDropdownOpen), // Toggle dropdown visibility
+      dropdownItems: [
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
+          content: intl.formatMessage({ id: 'header.links.courses.for_students', defaultMessage: 'For Students' }),
+        },
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
+          content: intl.formatMessage({ id: 'header.links.courses.for_employees', defaultMessage: 'For Employees' }),
+        },
+      ],
     },
   ];
 
@@ -80,7 +93,6 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
@@ -113,10 +125,10 @@ const Header = ({ intl }) => {
   return (
     <>
       <Responsive maxWidth={768}>
-        <MobileHeader {...props} />
+        <MobileHeader {...props} coursesDropdownOpen={coursesDropdownOpen} />
       </Responsive>
       <Responsive minWidth={769}>
-        <DesktopHeader {...props} />
+        <DesktopHeader {...props} coursesDropdownOpen={coursesDropdownOpen} />
       </Responsive>
     </>
   );
