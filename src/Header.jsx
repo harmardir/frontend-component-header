@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -32,6 +32,11 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
+
+  const toggleCoursesDropdown = () => {
+    setIsCoursesDropdownOpen(!isCoursesDropdownOpen);
+  };
 
   const mainMenu = [
     {
@@ -45,19 +50,13 @@ const Header = ({ intl }) => {
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'dropdown', // Change this to 'dropdown' to indicate a menu with sub-items
+      type: 'dropdown', // Dropdown for courses
       content: intl.formatMessage(messages['header.links.courses']),
-      subItems: [ // Define the sub-menu items
-        {
-          type: 'item',
-          href: `${config.LMS_BASE_URL}/courses/for_students`,
-          content: intl.formatMessage(messages['header.links.coursesForStudents']),
-        },
-        {
-          type: 'item',
-          href: `${config.LMS_BASE_URL}/courses/for_employees`,
-          content: intl.formatMessage(messages['header.links.coursesForEmployees']),
-        },
+      isOpen: isCoursesDropdownOpen,
+      toggle: toggleCoursesDropdown,
+      links: [
+        { href: `${config.LMS_BASE_URL}/courses/for_students`, content: 'لطلاب المدارس' },
+        { href: `${config.LMS_BASE_URL}/courses/for_employees`, content: 'موظفو وأعضاء المنظمات غير الحكومية والحكومية' },
       ],
     },
   ];
@@ -71,7 +70,7 @@ const Header = ({ intl }) => {
   const userMenu = authenticatedUser === null ? [] : [
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      href: `${config.LMS_BASE_URL}/courses`,
       content: intl.formatMessage(messages['header.user.menu.dashboard']),
     },
     {
@@ -91,7 +90,6 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
