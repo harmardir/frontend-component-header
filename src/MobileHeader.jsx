@@ -17,21 +17,10 @@ import { MenuIcon } from './Icons';
 class MobileHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isCoursesDropdownOpen: false,
-    };
-    this.toggleCoursesDropdown = this.toggleCoursesDropdown.bind(this);
-  }
-
-  toggleCoursesDropdown() {
-    this.setState((prevState) => ({
-      isCoursesDropdownOpen: !prevState.isCoursesDropdownOpen,
-    }));
   }
 
   renderMainMenu() {
     const { mainMenu } = this.props;
-    const { isCoursesDropdownOpen } = this.state;
 
     if (!Array.isArray(mainMenu)) {
       return mainMenu;
@@ -45,25 +34,18 @@ class MobileHeader extends React.Component {
         submenuContent,
       } = menuItem;
 
-      if (content === 'Courses') {
+      // Check if it's the /courses item
+      if (href === '/courses') {
         return (
-          <div key="courses-dropdown" className="nav-item">
-            <a
-              className="nav-link"
-              role="button"
-              tabIndex="0"
-              onClick={this.toggleCoursesDropdown}
-              onKeyPress={this.toggleCoursesDropdown}
-            >
+          <Menu key="courses-menu" tag="div" className="nav-item">
+            <MenuTrigger tag="a" role="button" tabIndex="0" className="nav-link">
               {content}
-            </a>
-            {isCoursesDropdownOpen && (
-              <div className="dropdown-menu show">
-                <a href="/courses/for_students" className="dropdown-item">For Students</a>
-                <a href="/courses/for_employees" className="dropdown-item">For Employees</a>
-              </div>
-            )}
-          </div>
+            </MenuTrigger>
+            <MenuContent className="position-static pin-left pin-right py-2">
+              <a href="/courses/for_students" className="dropdown-item">For Students</a>
+              <a href="/courses/for_employees" className="dropdown-item">For Employees</a>
+            </MenuContent>
+          </Menu>
         );
       }
 
@@ -127,6 +109,7 @@ class MobileHeader extends React.Component {
       userMenu,
       loggedOutItems,
     } = this.props;
+
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
     const logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'justify-content-left pl-3' : 'justify-content-center';
@@ -136,10 +119,12 @@ class MobileHeader extends React.Component {
         aria-label={intl.formatMessage(messages['header.label.main.header'])}
         className={`site-header-mobile d-flex justify-content-between align-items-center shadow ${stickyClassName}`}
       >
-        <a className="nav-skip sr-only sr-only-focusable" href="#main">{intl.formatMessage(messages['header.label.skip.nav'])}</a>
+        <a className="nav-skip sr-only sr-only-focusable" href="#main">
+          {intl.formatMessage(messages['header.label.skip.nav'])}
+        </a>
+        
         {mainMenu.length > 0 ? (
           <div className="w-100 d-flex justify-content-start">
-
             <Menu className="position-static">
               <MenuTrigger
                 tag="button"
@@ -159,9 +144,13 @@ class MobileHeader extends React.Component {
             </Menu>
           </div>
         ) : null}
+
         <div className={`w-100 d-flex ${logoClasses}`}>
-          { logoDestination === null ? <Logo className="logo" src={logo} alt={logoAltText} /> : <LinkedLogo className="logo" {...logoProps} itemType="http://schema.org/Organization" />}
+          { logoDestination === null ? 
+            <Logo className="logo" src={logo} alt={logoAltText} /> : 
+            <LinkedLogo className="logo" {...logoProps} itemType="http://schema.org/Organization" />}
         </div>
+
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
