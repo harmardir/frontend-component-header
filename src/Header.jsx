@@ -46,7 +46,7 @@ const Header = ({ intl }) => {
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/#courses-categories`, // Courses page
+      href: `${config.LMS_BASE_URL}#courses-categories`, // Courses page
       content: intl.formatMessage(messages['header.links.courses']),
     },
   ];
