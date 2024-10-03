@@ -45,9 +45,20 @@ const Header = ({ intl }) => {
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      type: 'dropdown', // Change this to 'dropdown' to indicate a menu with sub-items
       content: intl.formatMessage(messages['header.links.courses']),
+      subItems: [ // Define the sub-menu items
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
+          content: intl.formatMessage(messages['header.links.coursesForStudents']),
+        },
+        {
+          type: 'item',
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
+          content: intl.formatMessage(messages['header.links.coursesForEmployees']),
+        },
+      ],
     },
   ];
 

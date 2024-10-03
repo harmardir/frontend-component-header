@@ -15,14 +15,13 @@ import messages from './Header.messages';
 import { CaretIcon } from './Icons';
 
 class DesktopHeader extends React.Component {
-  constructor(props) { // eslint-disable-line no-useless-constructor
+  constructor(props) {
     super(props);
   }
 
   renderMainMenu() {
     const { mainMenu } = this.props;
 
-    // Nodes are accepted as a prop
     if (!Array.isArray(mainMenu)) {
       return mainMenu;
     }
@@ -32,7 +31,7 @@ class DesktopHeader extends React.Component {
         type,
         href,
         content,
-        submenuContent,
+        subItems,  // Add subItems to handle dropdown content
       } = menuItem;
 
       if (type === 'item') {
@@ -41,20 +40,27 @@ class DesktopHeader extends React.Component {
         );
       }
 
-      return (
-        <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
-          <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
-            {content} <CaretIcon role="img" aria-hidden focusable="false" />
-          </MenuTrigger>
-          <MenuContent className="pin-left pin-right shadow py-2">
-            {submenuContent}
-          </MenuContent>
-        </Menu>
-      );
+      if (type === 'dropdown' && Array.isArray(subItems)) {
+        return (
+          <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
+            <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center">
+              {content} <CaretIcon role="img" aria-hidden focusable="false" />
+            </MenuTrigger>
+            <MenuContent className="dropdown-menu shadow py-2">
+              {subItems.map((subItem) => (
+                <a key={`subitem-${subItem.content}`} className="dropdown-item" href={subItem.href}>
+                  {subItem.content}
+                </a>
+              ))}
+            </MenuContent>
+          </Menu>
+        );
+      }
+
+      return null;
     });
   }
 
-  // Renders an optional App Menu for
   renderAppMenu() {
     const { appMenu } = this.props;
     const { content: appMenuContent, menuItems } = appMenu;
@@ -63,7 +69,7 @@ class DesktopHeader extends React.Component {
         <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center">
           {appMenuContent} <CaretIcon role="img" aria-hidden focusable="false" />
         </MenuTrigger>
-        <MenuContent className="mb-0 dropdown-menu show dropdown-menu-right pin-right shadow py-2">
+        <MenuContent className="dropdown-menu show dropdown-menu-right pin-right shadow py-2">
           {menuItems.map(({ type, href, content }) => (
             <a className={`dropdown-${type}`} key={`${type}-${content}`} href={href}>{content}</a>
           ))}
@@ -90,7 +96,7 @@ class DesktopHeader extends React.Component {
           <Avatar size="1.5em" src={avatar} alt="" className="mr-2" />
           {username} <CaretIcon role="img" aria-hidden focusable="false" />
         </MenuTrigger>
-        <MenuContent className="mb-0 dropdown-menu show dropdown-menu-right pin-right shadow py-2">
+        <MenuContent className="dropdown-menu show dropdown-menu-right pin-right shadow py-2">
           {userMenu.map(({ type, href, content }) => (
             <a className={`dropdown-${type}`} key={`${type}-${content}`} href={href}>{content}</a>
           ))}

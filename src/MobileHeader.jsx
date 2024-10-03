@@ -15,14 +15,24 @@ import messages from './Header.messages';
 import { MenuIcon } from './Icons';
 
 class MobileHeader extends React.Component {
-  constructor(props) { // eslint-disable-line no-useless-constructor
+  constructor(props) {
     super(props);
+    this.state = {
+      isCoursesDropdownOpen: false,
+    };
+    this.toggleCoursesDropdown = this.toggleCoursesDropdown.bind(this);
+  }
+
+  toggleCoursesDropdown() {
+    this.setState((prevState) => ({
+      isCoursesDropdownOpen: !prevState.isCoursesDropdownOpen,
+    }));
   }
 
   renderMainMenu() {
     const { mainMenu } = this.props;
+    const { isCoursesDropdownOpen } = this.state;
 
-    // Nodes are accepted as a prop
     if (!Array.isArray(mainMenu)) {
       return mainMenu;
     }
@@ -34,6 +44,28 @@ class MobileHeader extends React.Component {
         content,
         submenuContent,
       } = menuItem;
+
+      if (content === 'Courses') {
+        return (
+          <div key="courses-dropdown" className="nav-item">
+            <a
+              className="nav-link"
+              role="button"
+              tabIndex="0"
+              onClick={this.toggleCoursesDropdown}
+              onKeyPress={this.toggleCoursesDropdown}
+            >
+              {content}
+            </a>
+            {isCoursesDropdownOpen && (
+              <div className="dropdown-menu show">
+                <a href="/courses/for_students" className="dropdown-item">For Students</a>
+                <a href="/courses/for_employees" className="dropdown-item">For Employees</a>
+              </div>
+            )}
+          </div>
+        );
+      }
 
       if (type === 'item') {
         return (
@@ -191,7 +223,6 @@ MobileHeader.defaultProps = {
   username: null,
   loggedIn: false,
   stickyOnMobile: true,
-
 };
 
 export default injectIntl(MobileHeader);
