@@ -45,7 +45,7 @@ var BurgerMenu = function BurgerMenu(_ref) {
     defaultMessage: 'About Us'
   })), /*#__PURE__*/React.createElement("a", {
     className: "dropdown-link",
-    href: "https://undp-lms.kashida-learning.co/courses",
+    href: "https://undp-lms.kashida-learning.co/#courses-categories",
     onClick: handleLinkClick
   }, intl.formatMessage({
     id: 'header.links.courses',

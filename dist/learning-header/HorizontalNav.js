@@ -15,7 +15,7 @@ var HorizontalNav = function HorizontalNav(_ref) {
     id: 'header.links.about',
     defaultMessage: 'About Us'
   })), /*#__PURE__*/React.createElement("a", {
-    href: "https://undp-lms.kashida-learning.co/courses"
+    href: "https://undp-lms.kashida-learning.co/#courses-categories"
   }, intl.formatMessage({
     id: 'header.links.courses',
     defaultMessage: 'Courses'
