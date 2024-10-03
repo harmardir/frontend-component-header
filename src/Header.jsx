@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -32,6 +32,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [isCoursesHovered, setIsCoursesHovered] = useState(false); // State to handle hover
 
   const mainMenu = [
     {
@@ -46,8 +47,20 @@ const Header = ({ intl }) => {
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
+      href: `${config.LMS_BASE_URL}/courses`,
       content: intl.formatMessage(messages['header.links.courses']),
+      onMouseEnter: () => setIsCoursesHovered(true), // Show dropdown on hover
+      onMouseLeave: () => setIsCoursesHovered(false), // Hide dropdown when not hovering
+      dropdownItems: [
+        {
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
+          content: 'لطلاب المدارس',
+        },
+        {
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
+          content: 'موظفو وأعضاء المنظمات غير الحكومية والحكومية',
+        },
+      ],
     },
   ];
 
@@ -80,7 +93,7 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
+  // Users should only see Order History if they have a ORDER_HISTORY_URL defined in the environment.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
@@ -117,6 +130,13 @@ const Header = ({ intl }) => {
       </Responsive>
       <Responsive minWidth={769}>
         <DesktopHeader {...props} />
+        {/* Dropdown for Courses */}
+        {isCoursesHovered && (
+          <ul className="dropdown-menu" onMouseLeave={() => setIsCoursesHovered(false)}>
+            <li><a href={`${config.LMS_BASE_URL}/courses/for_students`}>لطلاب المدارس</a></li>
+            <li><a href={`${config.LMS_BASE_URL}/courses/for_employees`}>موظفو وأعضاء المنظمات غير الحكومية والحكومية</a></li>
+          </ul>
+        )}
       </Responsive>
     </>
   );
