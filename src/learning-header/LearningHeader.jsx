@@ -28,7 +28,7 @@ LinkedLogo.propTypes = {
 const LearningHeader = ({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) => {
-  const { authenticatedUser } = useContext(AppContext);
+  const { authenticatedUser, config } = useContext(AppContext);
 
   const headerLogo = (
     <LinkedLogo
@@ -37,6 +37,36 @@ const LearningHeader = ({
       src={getConfig().LOGO_URL}
       alt={getConfig().SITE_NAME}
     />
+  );
+
+  // Define the main menu similar to Header.jsx
+  const mainMenu = [
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}`, // Homepage
+      content: intl.formatMessage(messages['header.links.home']),
+    },
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/about`, // About page
+      content: intl.formatMessage(messages['header.links.about']),
+    },
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}#courses-categories`, // Courses page
+      content: intl.formatMessage(messages['header.links.courses']),
+    },
+  ];
+
+  // Function to render menu items
+  const renderMenuItems = () => (
+    <ul className="main-menu">
+      {mainMenu.map((menuItem, index) => (
+        <li key={index}>
+          <a href={menuItem.href}>{menuItem.content}</a>
+        </li>
+      ))}
+    </ul>
   );
 
   return (
@@ -48,6 +78,12 @@ const LearningHeader = ({
           <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
+        
+        {/* Render the main menu */}
+        <div className="main-menu-container">
+          {renderMenuItems()}
+        </div>
+
         {showUserDropdown && authenticatedUser && (
           <AuthenticatedUserDropdown
             username={authenticatedUser.username}
