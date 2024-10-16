@@ -5,6 +5,9 @@
   "header.links.programs": "البرامج",
   "header.links.home":"الصفحة الرئيسية",
   "header.links.about":"حول المشروع",
+  "header.menu.signOut.label": "تسجيل الخروج",
+  "submenu.courses.for_students": "لطلاب المدارس",
+  "submenu.courses.for_employees":"موظفو وأعضاء المنظمات غير الحكومية والحكومية",
   "header.links.content.search": "اكتشف الجديد",
   "header.links.schools": "المدارس و الشركاء",
   "header.user.menu.dashboard": "لوحة المعلومات",
@@ -30,6 +33,5 @@
   "header.menu.profile.label": "الملف الشخصي",
   "header.menu.account.label": "الحساب",
   "header.menu.orderHistory.label": "سجل الطلبيات",
-  "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي",
-  "header.menu.signOut.label": "تسجيل الخروج"
+  "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي"
 }
