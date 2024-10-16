@@ -31,5 +31,7 @@
   "header.menu.account.label": "الحساب",
   "header.menu.orderHistory.label": "سجل الطلبيات",
   "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي",
-  "header.menu.signOut.label": "تسجيل الخروج"
+  "header.menu.signOut.label": "تسجيل الخروج",
+  "submenu.courses.for_students": "لطلاب المدارس",
+  "submenu.courses.for_employees":"موظفو وأعضاء المنظمات غير الحكومية والحكومية"
 }
