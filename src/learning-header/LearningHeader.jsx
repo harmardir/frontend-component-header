@@ -58,11 +58,11 @@ const LearningHeader = ({
       content: intl.formatMessage(messages['header.links.courses']),
       submenuItems: [
         {
-          href: '/courses/for_students',
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
           content: intl.formatMessage(messages['submenu.courses.for_students']),
         },
         {
-          href: '/courses/for_employees',
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
           content: intl.formatMessage(messages['submenu.courses.for_employees']),
         },
       ],
