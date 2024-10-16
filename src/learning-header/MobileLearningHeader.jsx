@@ -5,7 +5,6 @@ import { getConfig } from '@edx/frontend-platform';
 
 // Local Components
 import { Menu, MenuTrigger, MenuContent } from './Menu';
-import Avatar from './Avatar';
 import { LinkedLogo, Logo } from './Logo';
 
 // i18n
@@ -67,44 +66,14 @@ class MobileLearningHeader extends React.Component {
     });
   }
 
-  renderUserMenuItems() {
-    const { userMenu } = this.props;
-
-    return userMenu.map(({ type, href, content }) => (
-      <li className="nav-item" key={`${type}-${content}`}>
-        <a className="nav-link" href={href}>{content}</a>
-      </li>
-    ));
-  }
-
-  renderLoggedOutItems() {
-    const { loggedOutItems } = this.props;
-
-    return loggedOutItems.map(({ type, href, content }, i, arr) => (
-      <li className="nav-item px-3 my-2" key={`${type}-${content}`}>
-        <a
-          className={i < arr.length - 1 ? 'btn btn-block btn-outline-primary' : 'btn btn-block btn-primary'}
-          href={href}
-        >
-          {content}
-        </a>
-      </li>
-    ));
-  }
-
   render() {
     const {
       logo,
       logoAltText,
       logoDestination,
-      loggedIn,
-      avatar,
-      username,
       stickyOnMobile,
       intl,
       mainMenu,
-      userMenu,
-      loggedOutItems,
     } = this.props;
     const { isMenuOpen } = this.state;
 
@@ -139,25 +108,6 @@ class MobileLearningHeader extends React.Component {
           )}
         </div>
 
-        {/* User Menu / Logged Out Items */}
-        {userMenu.length > 0 || loggedOutItems.length > 0 ? (
-          <div className="w-100 d-flex justify-content-end align-items-center">
-            <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
-              <MenuTrigger
-                tag="button"
-                className="icon-button"
-                aria-label={intl.formatMessage(messages['header.label.account.menu'])}
-                title={intl.formatMessage(messages['header.label.account.menu'])}
-              >
-                <Avatar size="1.5rem" src={avatar} alt={username} />
-              </MenuTrigger>
-              <MenuContent tag="ul" className="nav flex-column pin-left pin-right border-top shadow py-2">
-                {loggedIn ? this.renderUserMenuItems() : this.renderLoggedOutItems()}
-              </MenuContent>
-            </Menu>
-          </div>
-        ) : null}
-
         {/* Main Menu Dropdown */}
         {isMenuOpen && (
           <nav className="main-menu-dropdown nav flex-column position-absolute pin-left pin-right border-top shadow py-2">
@@ -174,22 +124,9 @@ MobileLearningHeader.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
-  userMenu: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['item', 'menu']),
-    href: PropTypes.string,
-    content: PropTypes.string,
-  })),
-  loggedOutItems: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['item', 'menu']),
-    href: PropTypes.string,
-    content: PropTypes.string,
-  })),
   logo: PropTypes.string,
   logoAltText: PropTypes.string,
   logoDestination: PropTypes.string,
-  avatar: PropTypes.string,
-  username: PropTypes.string,
-  loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
 
   // i18n
@@ -198,14 +135,9 @@ MobileLearningHeader.propTypes = {
 
 MobileLearningHeader.defaultProps = {
   mainMenu: [],
-  userMenu: [],
-  loggedOutItems: [],
   logo: null,
   logoAltText: null,
   logoDestination: null,
-  avatar: null,
-  username: null,
-  loggedIn: false,
   stickyOnMobile: true,
 };
 

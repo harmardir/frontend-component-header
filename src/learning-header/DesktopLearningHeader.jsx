@@ -28,77 +28,10 @@ class DesktopLearningHeader extends React.Component {
     });
   }
 
-  renderAppMenu() {
-    const { appMenu } = this.props;
-
-    if (!Array.isArray(appMenu)) {
-      return appMenu;
-    }
-
-    return appMenu.map((menuItem) => {
-      const { type, href, content } = menuItem;
-
-      if (type === 'item') {
-        return (
-          <a key={`${type}-${content}`} className="nav-link" href={href} style={{ marginRight: '10px' }}>
-            {content}
-          </a>
-        );
-      }
-
-      return null;
-    });
-  }
-
-  renderLoggedOutItems() {
-    const { loggedOutMenu } = this.props;
-
-    if (!Array.isArray(loggedOutMenu)) {
-      return loggedOutMenu;
-    }
-
-    return loggedOutMenu.map((menuItem) => {
-      const { type, href, content } = menuItem;
-
-      if (type === 'item') {
-        return (
-          <a key={`${type}-${content}`} className="nav-link" href={href} style={{ marginRight: '10px' }}>
-            {content}
-          </a>
-        );
-      }
-
-      return null;
-    });
-  }
-
-  renderUserMenu() {
-    const { userMenu } = this.props;
-
-    if (!Array.isArray(userMenu)) {
-      return userMenu;
-    }
-
-    return userMenu.map((menuItem) => {
-      const { type, href, content } = menuItem;
-
-      if (type === 'item') {
-        return (
-          <a key={`${type}-${content}`} className="nav-link" href={href} style={{ marginRight: '10px' }}>
-            {content}
-          </a>
-        );
-      }
-
-      return null;
-    });
-  }
-
   render() {
     const {
       intl,
       loggedIn,
-      appMenu,
       logo,
       logoAltText,
       logoDestination,
@@ -125,22 +58,6 @@ class DesktopLearningHeader extends React.Component {
             >
               {this.renderMainMenu()}
             </nav>
-
-            {appMenu ? (
-              <nav
-                aria-label={intl.formatMessage(messages['header.label.app.nav'])}
-                className="nav app-nav"
-              >
-                {this.renderAppMenu()}
-              </nav>
-            ) : null}
-
-            <nav
-              aria-label={intl.formatMessage(messages['header.label.secondary.nav'])}
-              className="nav secondary-menu-container align-items-center ml-auto"
-            >
-              {loggedIn ? this.renderUserMenu() : this.renderLoggedOutItems()}
-            </nav>
           </div>
         </div>
       </header>
@@ -158,27 +75,6 @@ DesktopLearningHeader.propTypes = {
       content: PropTypes.node.isRequired,
     })
   ).isRequired,
-  appMenu: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      href: PropTypes.string.isRequired,
-      content: PropTypes.node.isRequired,
-    })
-  ),
-  loggedOutMenu: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      href: PropTypes.string.isRequired,
-      content: PropTypes.node.isRequired,
-    })
-  ),
-  userMenu: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      href: PropTypes.string.isRequired,
-      content: PropTypes.node.isRequired,
-    })
-  ),
   logo: PropTypes.string.isRequired,
   logoAltText: PropTypes.string.isRequired,
   logoDestination: PropTypes.string,
@@ -186,9 +82,6 @@ DesktopLearningHeader.propTypes = {
 };
 
 DesktopLearningHeader.defaultProps = {
-  appMenu: null,
-  loggedOutMenu: null,
-  userMenu: null,
   logoDestination: null,
   logoProps: {},
 };
