@@ -15,8 +15,19 @@ import messages from './Header.messages';
 import { MenuIcon } from './Icons';
 
 class MobileLearningHeader extends React.Component {
-  constructor(props) { // eslint-disable-line no-useless-constructor
+  constructor(props) {
     super(props);
+    this.state = {
+      isMenuOpen: false,  // Add state for burger menu
+    };
+
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
+  toggleMenu() {
+    this.setState((prevState) => ({
+      isMenuOpen: !prevState.isMenuOpen,
+    }));
   }
 
   renderMainMenu() {
@@ -95,6 +106,8 @@ class MobileLearningHeader extends React.Component {
       userMenu,
       loggedOutItems,
     } = this.props;
+    const { isMenuOpen } = this.state;
+
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
     const logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'justify-content-left pl-3' : 'justify-content-center';
@@ -105,31 +118,28 @@ class MobileLearningHeader extends React.Component {
         className={`site-header-mobile d-flex justify-content-between align-items-center shadow ${stickyClassName}`}
       >
         <a className="nav-skip sr-only sr-only-focusable" href="#main">{intl.formatMessage(messages['header.label.skip.nav'])}</a>
-        {mainMenu.length > 0 ? (
-          <div className="w-100 d-flex justify-content-start">
+        
+        {/* Burger Menu Button */}
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={intl.formatMessage(messages['header.label.main.menu'])}
+          title={intl.formatMessage(messages['header.label.main.menu'])}
+          onClick={this.toggleMenu}
+        >
+          <MenuIcon role="img" aria-hidden focusable="false" style={{ width: '1.5rem', height: '1.5rem' }} />
+        </button>
 
-            <Menu className="position-static">
-              <MenuTrigger
-                tag="button"
-                className="icon-button"
-                aria-label={intl.formatMessage(messages['header.label.main.menu'])}
-                title={intl.formatMessage(messages['header.label.main.menu'])}
-              >
-                <MenuIcon role="img" aria-hidden focusable="false" style={{ width: '1.5rem', height: '1.5rem' }} />
-              </MenuTrigger>
-              <MenuContent
-                tag="nav"
-                aria-label={intl.formatMessage(messages['header.label.main.nav'])}
-                className="nav flex-column pin-left pin-right border-top shadow py-2"
-              >
-                {this.renderMainMenu()}
-              </MenuContent>
-            </Menu>
-          </div>
-        ) : null}
+        {/* Logo */}
         <div className={`w-100 d-flex ${logoClasses}`}>
-          { logoDestination === null ? <Logo className="logo" src={logo} alt={logoAltText} /> : <LinkedLogo className="logo" {...logoProps} itemType="http://schema.org/Organization" />}
+          {logoDestination === null ? (
+            <Logo className="logo" src={logo} alt={logoAltText} />
+          ) : (
+            <LinkedLogo className="logo" {...logoProps} itemType="http://schema.org/Organization" />
+          )}
         </div>
+
+        {/* User Menu / Logged Out Items */}
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
@@ -147,6 +157,13 @@ class MobileLearningHeader extends React.Component {
             </Menu>
           </div>
         ) : null}
+
+        {/* Main Menu Dropdown */}
+        {isMenuOpen && (
+          <nav className="main-menu-dropdown nav flex-column position-absolute pin-left pin-right border-top shadow py-2">
+            {this.renderMainMenu()}
+          </nav>
+        )}
       </header>
     );
   }
@@ -157,7 +174,6 @@ MobileLearningHeader.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
-
   userMenu: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['item', 'menu']),
     href: PropTypes.string,

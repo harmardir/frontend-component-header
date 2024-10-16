@@ -26,7 +26,7 @@ LinkedLogo.propTypes = {
 };
 
 const LearningHeader = ({
-  courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
+  intl, showUserDropdown,
 }) => {
   const { authenticatedUser, config } = useContext(AppContext);
 
@@ -74,11 +74,7 @@ const LearningHeader = ({
       <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
       <div className="container-xl py-2 d-flex align-items-center">
         {headerLogo}
-        <div className="flex-grow-1 course-title-lockup" style={{ lineHeight: 1 }}>
-          <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
-          <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
-        </div>
-        
+      
         {/* Render the main menu */}
         <div className="main-menu-container">
           {renderMenuItems()}
@@ -98,17 +94,11 @@ const LearningHeader = ({
 };
 
 LearningHeader.propTypes = {
-  courseOrg: PropTypes.string,
-  courseNumber: PropTypes.string,
-  courseTitle: PropTypes.string,
   intl: intlShape.isRequired,
   showUserDropdown: PropTypes.bool,
 };
 
 LearningHeader.defaultProps = {
-  courseOrg: null,
-  courseNumber: null,
-  courseTitle: null,
   showUserDropdown: true,
 };
 
