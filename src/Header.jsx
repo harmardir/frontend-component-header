@@ -45,9 +45,19 @@ const Header = ({ intl }) => {
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'item',
+      type: 'item-with-submenu', // Submenu for Courses
       href: `${config.LMS_BASE_URL}#courses-categories`, // Courses page
       content: intl.formatMessage(messages['header.links.courses']),
+      submenuItems: [
+        {
+          href: `${config.LMS_BASE_URL}/courses/for_students`,
+          content: intl.formatMessage(messages['submenu.courses.for_students']),
+        },
+        {
+          href: `${config.LMS_BASE_URL}/courses/for_employees`,
+          content: intl.formatMessage(messages['submenu.courses.for_employees']),
+        },
+      ],
     },
   ];
 
@@ -80,7 +90,7 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
+  // Users should only see Order History if ORDER_HISTORY_URL is defined.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }

@@ -126,6 +126,16 @@ const messages = defineMessages({
     defaultMessage: 'App',
     description: 'The aria label for the app Nav',
   },
+  'submenu.courses.for_students': {
+    id: 'submenu.courses.for_students',
+    defaultMessage: 'Fot Students',
+    description: 'Link to the student courses dashboard'
+  },
+  'submenu.courses.for_employees': {
+    id: 'submenu.courses.for_employees',
+    defaultMessage: 'For Employees',
+    description: 'Link to the employee courses dashboard'
+  },
 });
 
 export default messages;

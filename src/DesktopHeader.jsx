@@ -1,3 +1,5 @@
+// DesktopHeader.jsx
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -15,7 +17,7 @@ import messages from './Header.messages';
 import { CaretIcon } from './Icons';
 
 class DesktopHeader extends React.Component {
-  constructor(props) { // eslint-disable-line no-useless-constructor
+  constructor(props) { 
     super(props);
   }
 
@@ -32,7 +34,7 @@ class DesktopHeader extends React.Component {
         type,
         href,
         content,
-        submenuContent,
+        submenuItems, // Submenu items for handling item-with-submenu
       } = menuItem;
 
       if (type === 'item') {
@@ -41,20 +43,27 @@ class DesktopHeader extends React.Component {
         );
       }
 
-      return (
-        <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
-          <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
-            {content} <CaretIcon role="img" aria-hidden focusable="false" />
-          </MenuTrigger>
-          <MenuContent className="pin-left pin-right shadow py-2">
-            {submenuContent}
-          </MenuContent>
-        </Menu>
-      );
+      if (type === 'item-with-submenu') {
+        return (
+          <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
+            <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
+              {content} <CaretIcon role="img" aria-hidden focusable="false" />
+            </MenuTrigger>
+            <MenuContent className="pin-left pin-right shadow py-2">
+              {submenuItems.map((submenuItem) => (
+                <a key={submenuItem.href} className="dropdown-item" href={submenuItem.href}>
+                  {submenuItem.content}
+                </a>
+              ))}
+            </MenuContent>
+          </Menu>
+        );
+      }
+
+      return null;
     });
   }
 
-  // Renders an optional App Menu for
   renderAppMenu() {
     const { appMenu } = this.props;
     const { content: appMenuContent, menuItems } = appMenu;

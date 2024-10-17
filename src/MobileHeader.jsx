@@ -15,14 +15,13 @@ import messages from './Header.messages';
 import { MenuIcon } from './Icons';
 
 class MobileHeader extends React.Component {
-  constructor(props) { // eslint-disable-line no-useless-constructor
+  constructor(props) {
     super(props);
   }
 
   renderMainMenu() {
     const { mainMenu } = this.props;
 
-    // Nodes are accepted as a prop
     if (!Array.isArray(mainMenu)) {
       return mainMenu;
     }
@@ -43,15 +42,27 @@ class MobileHeader extends React.Component {
         );
       }
 
+      if (submenuContent && submenuContent.length > 0) {
+        return (
+          <Menu key={`${type}-${content}`} tag="div" className="nav-item">
+            <MenuTrigger tag="a" role="button" tabIndex="0" className="nav-link">
+              {content}
+            </MenuTrigger>
+            <MenuContent className="position-static pin-left pin-right py-2">
+              {submenuContent.map((subItem) => (
+                <a key={`submenu-${subItem.content}`} className="nav-link" href={subItem.href}>
+                  {subItem.content}
+                </a>
+              ))}
+            </MenuContent>
+          </Menu>
+        );
+      }
+
       return (
-        <Menu key={`${type}-${content}`} tag="div" className="nav-item">
-          <MenuTrigger tag="a" role="button" tabIndex="0" className="nav-link">
-            {content}
-          </MenuTrigger>
-          <MenuContent className="position-static pin-left pin-right py-2">
-            {submenuContent}
-          </MenuContent>
-        </Menu>
+        <a key={`${type}-${content}`} className="nav-link" href={href}>
+          {content}
+        </a>
       );
     });
   }
@@ -191,7 +202,6 @@ MobileHeader.defaultProps = {
   username: null,
   loggedIn: false,
   stickyOnMobile: true,
-
 };
 
 export default injectIntl(MobileHeader);
