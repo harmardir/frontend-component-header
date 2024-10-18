@@ -36,6 +36,21 @@ const messages = defineMessages({
     defaultMessage: 'Sign Out',
     description: 'The label for the user menu Sign Out action.',
   },
+  'header.links.home': { 
+    id: 'header.links.home', 
+    defaultMessage: 'Home', 
+    description: 'Label for the Home link in the header' 
+  }, 
+  'header.links.about': { 
+    id: 'header.links.about', 
+    defaultMessage: 'About', 
+    description: 'Label for the About link in the header' 
+  }, 
+  'header.links.courses': { 
+    id: 'header.links.courses', 
+    defaultMessage: 'Courses', 
+    description: 'Link to the learner course dashboard'
+  },
 });
 
 export default messages;
