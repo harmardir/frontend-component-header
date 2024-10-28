@@ -66,7 +66,6 @@ const LearningHeader = ({
         {headerLogo}
 
         {/* Burger menu for mobile */}
-
         <div className="burger-menu-icon d-block d-md-none" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? (
             <span className="close-icon">X</span> // Show "X" when the menu is open
