@@ -53,9 +53,14 @@ const LearningHeader = ({
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
-      type: 'item', // Single link for Courses, no submenu
+      type: 'item', 
       href: `${config.LMS_BASE_URL}/courses`, // Courses page
       content: intl.formatMessage(messages['header.links.courses']),
+    },
+    {
+      type: 'item', 
+      href: `${config.LMS_BASE_URL}/contact`, // Contact page
+      content: intl.formatMessage(messages['header.links.contact']),
     },
   ];
 

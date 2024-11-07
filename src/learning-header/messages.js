@@ -51,6 +51,11 @@ const messages = defineMessages({
     defaultMessage: 'Courses', 
     description: 'Link to the learner course dashboard'
   },
+  'header.links.contact': { 
+    id: 'header.links.contact', 
+    defaultMessage: 'Contact', 
+    description: 'Link to the learner contact page'
+  },
 });
 
 export default messages;
