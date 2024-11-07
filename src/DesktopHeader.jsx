@@ -21,26 +21,28 @@ class DesktopHeader extends React.Component {
 
   renderMainMenu() {
     const { mainMenu } = this.props;
-
-    // Nodes are accepted as a prop
+  
     if (!Array.isArray(mainMenu)) {
       return mainMenu;
     }
-
+  
     return mainMenu.map((menuItem) => {
       const {
         type,
         href,
         content,
         submenuContent,
+        className,  // Access the className property
       } = menuItem;
-
+  
+      const linkClassName = className ? `nav-link ${className}` : 'nav-link';
+  
       if (type === 'item') {
         return (
-          <a key={`${type}-${content}`} className="nav-link" href={href}>{content}</a>
+          <a key={`${type}-${content}`} className={linkClassName} href={href}>{content}</a>
         );
       }
-
+  
       return (
         <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
           <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
@@ -53,6 +55,7 @@ class DesktopHeader extends React.Component {
       );
     });
   }
+  
 
   // Renders an optional App Menu for
   renderAppMenu() {

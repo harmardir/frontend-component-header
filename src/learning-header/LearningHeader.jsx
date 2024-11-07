@@ -62,6 +62,13 @@ const LearningHeader = ({
       href: `${config.LMS_BASE_URL}/contact`, // Contact page
       content: intl.formatMessage(messages['header.links.contact']),
     },
+
+    {
+      type: 'item', 
+      href: `${config.LMS_BASE_URL}/dashboard`, // Dashboard page
+      content: intl.formatMessage(messages['header.links.dashboard']),
+      className: 'dashboard-link',
+    },
   ];
 
   return (
@@ -87,13 +94,13 @@ const LearningHeader = ({
           <ul className="nav">
             {mainMenu.map((item) => (
               <li className="nav-item" key={item.href || item.content}>
-                <a className="nav-link" href={item.href}>
+                <a className={`nav-link ${item.className || ''}`} href={item.href}>
                   {item.content}
                 </a>
-              </li>
-            ))}
+            </li>
+          ))}
           </ul>
-        </nav>
+        </nav>  
 
         {/* Mobile menu */}
         <nav className={`mobile-menu d-md-none ${menuOpen ? 'open' : ''}`}>
