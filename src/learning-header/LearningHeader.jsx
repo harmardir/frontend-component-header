@@ -63,12 +63,15 @@ const LearningHeader = ({
       content: intl.formatMessage(messages['header.links.contact']),
     },
 
-    {
-      type: 'item', 
-      href: `${config.LMS_BASE_URL}/dashboard`, // Dashboard page
-      content: intl.formatMessage(messages['header.links.dashboard']),
-      className: 'dashboard-link',
-    },
+    // Only include Dashboard link if authenticatedUser exists (user is logged in)
+    ...(authenticatedUser ? [
+      {
+        type: 'item', 
+        href: `${config.LMS_BASE_URL}/dashboard`, // Dashboard page
+        content: intl.formatMessage(messages['header.links.dashboard']),
+        className: 'dashboard-link',
+      },
+    ] : []),
   ];
 
   return (
