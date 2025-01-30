@@ -54,24 +54,21 @@ const LearningHeader = ({
     },
     {
       type: 'item', 
-      href: `${config.LMS_BASE_URL}/courses`, // Courses page
-      content: intl.formatMessage(messages['header.links.courses']),
+      href: `${config.LMS_BASE_URL}/#`, // Partners page
+      content: intl.formatMessage(messages['header.links.partners']),
     },
     {
       type: 'item', 
-      href: `${config.LMS_BASE_URL}/contact`, // Contact page
-      content: intl.formatMessage(messages['header.links.contact']),
+      href: `${config.LMS_BASE_URL}/courses/for_students'`, // Public courses page
+      content: intl.formatMessage(messages['header.links.publicCourses']),
     },
 
-    // Only include Dashboard link if authenticatedUser exists (user is logged in)
-    ...(authenticatedUser ? [
-      {
-        type: 'item', 
-        href: `${config.LMS_BASE_URL}/dashboard`, // Dashboard page
-        content: intl.formatMessage(messages['header.links.dashboard']),
-        className: 'dashboard-link',
-      },
-    ] : []),
+    {
+      type: 'item', 
+      href: `${config.LMS_BASE_URL}/courses/for_employees`, // Professional courses page
+      content: intl.formatMessage(messages['header.links.professionalCourses']),
+    },
+
   ];
 
   return (

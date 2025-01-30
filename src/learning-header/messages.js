@@ -46,20 +46,20 @@ const messages = defineMessages({
     defaultMessage: 'About', 
     description: 'Label for the About link in the header' 
   }, 
-  'header.links.courses': { 
-    id: 'header.links.courses', 
-    defaultMessage: 'Courses', 
-    description: 'Link to the learner course dashboard'
+  'header.links.partners': { 
+    id: 'header.links.partners', 
+    defaultMessage: 'Partners', 
+    description: 'Link to the Partners link in the header'
   },
-  'header.links.contact': { 
-    id: 'header.links.contact', 
-    defaultMessage: 'Contact', 
-    description: 'Link to the learner contact page'
+  'header.links.publicCourses': { 
+    id: 'header.links.publicCourses', 
+    defaultMessage: 'For Public', 
+    description: 'Link to the public courses page'
   },
-  'header.links.dashboard': { 
-    id: 'header.links.dashboard', 
-    defaultMessage: 'Dashboard', 
-    description: 'Link to the learner dashboard page'
+  'header.links.professionalCourses': { 
+    id: 'header.links.professionalCourses', 
+    defaultMessage: 'For Professionals', 
+    description: 'Link to the professional courses page'
   },
 });
 
