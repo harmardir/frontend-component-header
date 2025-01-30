@@ -61,12 +61,14 @@ const LearningHeader = ({
       type: 'item', 
       href: `${config.LMS_BASE_URL}/courses/for_students'`, // Public courses page
       content: intl.formatMessage(messages['header.links.publicCourses']),
+      className: 'highlight-background',
     },
 
     {
       type: 'item', 
       href: `${config.LMS_BASE_URL}/courses/for_employees`, // Professional courses page
       content: intl.formatMessage(messages['header.links.professionalCourses']),
+      className: 'highlight-background',
     },
 
   ];
