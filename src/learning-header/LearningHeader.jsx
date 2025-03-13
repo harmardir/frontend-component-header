@@ -61,14 +61,19 @@ const LearningHeader = ({ intl, showUserDropdown }) => {
       type: 'dropdown', // Mark it as a dropdown
       content: (
         <>
-          للمتخصصين <span className="learning-chevron-down"></span>
+          <a href={`${config.LMS_BASE_URL}/courses/for_professionals`}>
+            للمتخصصين
+          </a>
+          <span
+            className="learning-chevron-down"
+            onClick={(e) => {
+              e.preventDefault(); // Prevents the link from being followed
+              setDropdownOpen(!dropdownOpen);
+            }}
+          ></span>
         </>
       ),
       className: 'highlight-background',
-      onClick: (e) => {
-        e.preventDefault();
-        setDropdownOpen(!dropdownOpen); // Toggle dropdown visibility
-      },
       dropdown: (
         <ul className={`learning-dropdown-menu ${dropdownOpen ? 'open' : ''}`}>
           <li className="learning-dropdown-item">
