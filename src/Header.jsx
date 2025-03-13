@@ -57,13 +57,31 @@ const Header = ({ intl }) => {
     },
 
     {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/courses/for_employees`, // Professional Courses page
-      content: intl.formatMessage(messages['header.links.professionalCourses']),
-      className: 'highlight-background',
+      type: 'custom', // Custom dropdown item
+      content: (
+        <div className={`professional-courses-dropdown ${isDropdownOpen ? 'open' : ''}`}>
+          <a href={`${config.LMS_BASE_URL}/courses/for_employees`} className="menu-link">
+            {intl.formatMessage(messages['header.links.professionalCourses'])}
+          </a>
+          <span className="custom-chevron-down" onClick={toggleDropdown}></span>
+          {isDropdownOpen && (
+            <ul className="custom-professional-menu">
+              <li className="custom-professional-item">
+                <a href={`${config.LMS_BASE_URL}/courses/course-v1:ACINET+ACINET_A+T2_2024/about`}>
+                  رصد وتقييم الاستراتيجيات <br /> الوطنية لمكافحة الفساد
+                </a>
+              </li>
+              <li className="custom-professional-item">
+                <a href={`${config.LMS_BASE_URL}/courses/course-v1:ACINET+ACINET_C+T2_2024/about`}>
+                  إدارة مخاطر الفساد القطاعي
+                </a>
+              </li>
+            </ul>
+          )}
+        </div>
+      ),
+      className: 'highlight-background has-dropdown',
     },
-
-    
   ];
 
   const orderHistoryItem = {
