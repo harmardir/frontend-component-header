@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -32,32 +32,36 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(prevState => !prevState);
+  };
 
   const mainMenu = [
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}`, // Homepage
+      href: `${config.LMS_BASE_URL}`,
       content: intl.formatMessage(messages['header.links.home']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/about`, // About page
+      href: `${config.LMS_BASE_URL}/about`,
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/#`, // Partners page
+      href: `${config.LMS_BASE_URL}/#`,
       content: intl.formatMessage(messages['header.links.partners']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/courses/for_students`, // Public Courses page
+      href: `${config.LMS_BASE_URL}/courses/for_students`,
       content: intl.formatMessage(messages['header.links.publicCourses']),
       className: 'highlight-background',
     },
-
     {
-      type: 'custom', // Custom dropdown item
+      type: 'custom',
       content: (
         <div className={`professional-courses-dropdown ${isDropdownOpen ? 'open' : ''}`}>
           <a href={`${config.LMS_BASE_URL}/courses/for_employees`} className="menu-link">
@@ -113,7 +117,6 @@ const Header = ({ intl }) => {
     },
   ];
 
-  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
   if (config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
