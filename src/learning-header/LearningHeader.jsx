@@ -61,7 +61,7 @@ const LearningHeader = ({ intl, showUserDropdown }) => {
       type: 'dropdown', // Mark it as a dropdown
       content: (
         <>
-          <a href={`${config.LMS_BASE_URL}/courses/for_professionals`}>
+          <a href={`${config.LMS_BASE_URL}/courses/for_employees`}>
             للمتخصصين
           </a>
           <span
