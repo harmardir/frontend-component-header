@@ -1,87 +1,88 @@
-import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { getConfig } from '@edx/frontend-platform';
+import React, { useContext, useState } from 'react';
+import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
+import {
+  APP_CONFIG_INITIALIZED,
+  ensureConfig,
+  mergeConfig,
+  getConfig,
+  subscribe,
+} from '@edx/frontend-platform';
 
-import AnonymousUserMenu from './AnonymousUserMenu';
-import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
-import messages from './messages';
+import DesktopHeader from './DesktopHeader';
+import MobileHeader from './MobileHeader';
 
-const LinkedLogo = ({ href, src, alt, ...attributes }) => (
-  <a href={href} {...attributes}>
-    <img className="d-block" src={src} alt={alt} />
-  </a>
-);
+import messages from './Header.messages';
 
-LinkedLogo.propTypes = {
-  href: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-};
+ensureConfig([
+  'LMS_BASE_URL',
+  'LOGOUT_URL',
+  'LOGIN_URL',
+  'SITE_NAME',
+  'LOGO_URL',
+  'ORDER_HISTORY_URL',
+], 'Header component');
 
-const LearningHeader = ({ intl, showUserDropdown }) => {
+subscribe(APP_CONFIG_INITIALIZED, () => {
+  mergeConfig({
+    AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
+  }, 'Header additional config');
+});
+
+const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
-  
-  const [menuOpen, setMenuOpen] = useState(false); // Mobile menu toggle
-  const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown toggle for "للمتخصصين"
-
-  const headerLogo = (
-    <LinkedLogo
-      className="logo"
-      href={`${getConfig().LMS_BASE_URL}/dashboard`}
-      src={getConfig().LOGO_URL}
-      alt={getConfig().SITE_NAME}
-    />
-  );
+  const [isProfessionalDropdownOpen, setProfessionalDropdownOpen] = useState(false);
 
   const mainMenu = [
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}`, 
+      href: `${config.LMS_BASE_URL}`, // Homepage
       content: intl.formatMessage(messages['header.links.home']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/about`, 
+      href: `${config.LMS_BASE_URL}/about`, // About page
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/partners`,
+      href: `${config.LMS_BASE_URL}/#`, // Partners page
       content: intl.formatMessage(messages['header.links.partners']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/courses/for_students`, 
+      href: `${config.LMS_BASE_URL}/courses/for_students`, // Public Courses page
       content: intl.formatMessage(messages['header.links.publicCourses']),
       className: 'highlight-background',
     },
     {
-      type: 'dropdown', // Mark it as a dropdown
+      type: 'dropdown',
       content: (
-        <>
+        <div className="custom-professional-dropdown">
           <a href={`${config.LMS_BASE_URL}/courses/for_employees`}>
-            للمتخصصين
+            {intl.formatMessage(messages['header.links.professionalCourses'])}
           </a>
           <span
-            className="learning-chevron-down"
+            className="custom-professional-chevron"
             onClick={(e) => {
-              e.preventDefault(); // Prevents the link from being followed
-              setDropdownOpen(!dropdownOpen);
+              e.preventDefault(); // Prevents navigation
+              setProfessionalDropdownOpen(!isProfessionalDropdownOpen);
             }}
-          ></span>
-        </>
+          >
+            ▼
+          </span>
+        </div>
       ),
       className: 'highlight-background',
       dropdown: (
-        <ul className={`learning-dropdown-menu ${dropdownOpen ? 'open' : ''}`}>
-          <li className="learning-dropdown-item">
+        <ul className={`custom-professional-dropdown-menu ${isProfessionalDropdownOpen ? 'open' : ''}`}>
+          <li className="custom-professional-dropdown-item">
             <a href={`${config.LMS_BASE_URL}/courses/course-v1:ACINET+ACINET_A+T2_2024/about`}>
               رصد وتقييم الاستراتيجيات <br /> الوطنية لمكافحة الفساد
             </a>
           </li>
-          <li className="learning-dropdown-item">
+          <li className="custom-professional-dropdown-item">
             <a href={`${config.LMS_BASE_URL}/courses/course-v1:ACINET+ACINET_C+T2_2024/about`}>
               إدارة مخاطر الفساد القطاعي
             </a>
@@ -91,77 +92,78 @@ const LearningHeader = ({ intl, showUserDropdown }) => {
     },
   ];
 
+  const orderHistoryItem = {
+    type: 'item',
+    href: config.ORDER_HISTORY_URL,
+    content: intl.formatMessage(messages['header.user.menu.order.history']),
+  };
+
+  const userMenu = authenticatedUser === null ? [] : [
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/dashboard`,
+      content: intl.formatMessage(messages['header.user.menu.dashboard']),
+    },
+    {
+      type: 'item',
+      href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
+      content: intl.formatMessage(messages['header.user.menu.profile']),
+    },
+    {
+      type: 'item',
+      href: config.ACCOUNT_SETTINGS_URL,
+      content: intl.formatMessage(messages['header.user.menu.account.settings']),
+    },
+    {
+      type: 'item',
+      href: config.LOGOUT_URL,
+      content: intl.formatMessage(messages['header.user.menu.logout']),
+    },
+  ];
+
+  if (config.ORDER_HISTORY_URL) {
+    userMenu.splice(-1, 0, orderHistoryItem);
+  }
+
+  const loggedOutItems = [
+    {
+      type: 'item',
+      href: config.LOGIN_URL,
+      content: intl.formatMessage(messages['header.user.menu.login']),
+    },
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/register`,
+      content: intl.formatMessage(messages['header.user.menu.register']),
+    },
+  ];
+
+  const props = {
+    logo: config.LOGO_URL,
+    logoAltText: config.SITE_NAME,
+    logoDestination: `${config.LMS_BASE_URL}/dashboard`,
+    loggedIn: authenticatedUser !== null,
+    username: authenticatedUser !== null ? authenticatedUser.username : null,
+    avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
+    mainMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : mainMenu,
+    userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,
+    loggedOutItems: getConfig().AUTHN_MINIMAL_HEADER ? [] : loggedOutItems,
+  };
+
   return (
-    <header className="learning-header">
-      <a className="sr-only sr-only-focusable" href="#main-content">
-        {intl.formatMessage(messages.skipNavLink)}
-      </a>
-      <div className="container-xl py-2 d-flex align-items-center">
-        {headerLogo}
-
-        {/* Burger menu for mobile */}
-        <div className="burger-menu-icon d-block d-md-none" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? (
-            <span className="close-icon">X</span>
-          ) : (
-            <>
-              <span className="burger-bar"></span>
-              <span className="burger-bar"></span>
-              <span className="burger-bar"></span>
-            </>
-          )}
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="main-menu ml-3 d-none d-md-block">
-          <ul className="nav">
-            {mainMenu.map((item, index) => (
-              <li className="nav-item" key={index}>
-                <a
-                  className={`nav-link ${item.className || ''}`}
-                  href={item.href || '#'}
-                  onClick={item.onClick}
-                >
-                  {item.content}
-                </a>
-                {/* Render dropdown if present */}
-                {item.dropdown && dropdownOpen && item.dropdown}
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Mobile Navigation */}
-        <nav className={`mobile-menu d-md-none ${menuOpen ? 'open' : ''}`}>
-          <ul className="nav">
-            {mainMenu.map((item, index) => (
-              <li className="nav-item" key={index}>
-                <a className="nav-link" href={item.href || '#'} onClick={item.onClick}>
-                  {item.content}
-                </a>
-                {/* Render dropdown if present */}
-                {item.dropdown && dropdownOpen && item.dropdown}
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {showUserDropdown && authenticatedUser && (
-          <AuthenticatedUserDropdown username={authenticatedUser.username} />
-        )}
-        {showUserDropdown && !authenticatedUser && <AnonymousUserMenu />}
-      </div>
-    </header>
+    <>
+      <Responsive maxWidth={768}>
+        <MobileHeader {...props} />
+      </Responsive>
+      <Responsive minWidth={769}>
+        <DesktopHeader {...props} />
+      </Responsive>
+    </>
   );
 };
 
-LearningHeader.propTypes = {
+Header.propTypes = {
   intl: intlShape.isRequired,
-  showUserDropdown: PropTypes.bool,
 };
 
-LearningHeader.defaultProps = {
-  showUserDropdown: true,
-};
-
-export default injectIntl(LearningHeader);
+export default injectIntl(Header);
