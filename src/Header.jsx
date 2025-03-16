@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
