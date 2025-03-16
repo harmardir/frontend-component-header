@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -32,6 +33,12 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = (event) => {
+    event.preventDefault(); // Prevent any unwanted navigation when clicking the chevron
+    setDropdownOpen((prev) => !prev);
+  };
 
   const mainMenu = [
     {
@@ -60,10 +67,14 @@ const Header = ({ intl }) => {
       type: 'custom', // Custom dropdown item
       content: (
         <div className={`professional-courses-dropdown ${isDropdownOpen ? 'open' : ''}`}>
+          {/* Clicking this should navigate as usual */}
           <a href={`${config.LMS_BASE_URL}/courses/for_employees`} className="menu-link">
             {intl.formatMessage(messages['header.links.professionalCourses'])}
           </a>
+          {/* Clicking this should toggle dropdown */}
           <span className="custom-chevron-down" onClick={toggleDropdown}></span>
+          
+          {/* Dropdown content */}
           {isDropdownOpen && (
             <ul className="custom-professional-menu">
               <li className="custom-professional-item">
