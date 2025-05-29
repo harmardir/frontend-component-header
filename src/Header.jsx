@@ -41,7 +41,7 @@ const Header = ({ intl }) => {
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/about`, // About page
+      href: 'https://savolaworld.com/Makeen.php', // External About page
       content: intl.formatMessage(messages['header.links.about']),
     },
     {
