@@ -29,7 +29,7 @@ const LearningHeader = ({ intl, showUserDropdown }) => {
   const headerLogo = (
     <LinkedLogo
       className="logo"
-      href={`${getConfig().LMS_BASE_URL}/dashboard`}
+      href={`${getConfig().LMS_BASE_URL}/`}
       src={getConfig().LOGO_URL}
       alt={getConfig().SITE_NAME}
     />
