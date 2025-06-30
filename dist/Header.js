@@ -70,7 +70,7 @@ var Header = function Header(_ref) {
     }, /*#__PURE__*/React.createElement("li", {
       className: "custom-professional-item"
     }, /*#__PURE__*/React.createElement("a", {
-      href: "".concat(config.LMS_BASE_URL, "/courses/course-v1:ACINET+ACINET_A+T2_2024/about")
+      href: "".concat(config.LMS_BASE_URL, "/courses/course-v1:ACINET+ACINET_B+2025/about")
     }, "\u0631\u0635\u062F \u0648\u062A\u0642\u064A\u064A\u0645 \u0627\u0644\u0627\u0633\u062A\u0631\u0627\u062A\u064A\u062C\u064A\u0627\u062A ", /*#__PURE__*/React.createElement("br", null), " \u0627\u0644\u0648\u0637\u0646\u064A\u0629 \u0644\u0645\u0643\u0627\u0641\u062D\u0629 \u0627\u0644\u0641\u0633\u0627\u062F")), /*#__PURE__*/React.createElement("li", {
       className: "custom-professional-item"
     }, /*#__PURE__*/React.createElement("a", {
