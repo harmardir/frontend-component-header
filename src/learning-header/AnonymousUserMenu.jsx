@@ -8,7 +8,7 @@ import { Button } from '@edx/paragon';
 import genericMessages from '../generic/messages';
 
 const AnonymousUserMenu = ({ intl }) => (
-  <div>
+  <div className="hide-anonymous-menu">
     <Button
       className="mr-3"
       variant="outline-primary"
