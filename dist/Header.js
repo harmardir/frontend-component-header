@@ -1,0 +1,148 @@
+import React, { useContext } from 'react';
+import Responsive from 'react-responsive';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
+import { APP_CONFIG_INITIALIZED, ensureConfig, mergeConfig, getConfig, subscribe } from '@edx/frontend-platform';
+import DesktopHeader from './DesktopHeader';
+import MobileHeader from './MobileHeader';
+import messages from './Header.messages';
+import youtubeIcon from './learning-header/youtube-white.png';
+import facebookIcon from './learning-header/facebook-white.png';
+import instagramIcon from './learning-header/instagram-white.png';
+import linkedinIcon from './learning-header/linkedin-white.png';
+import xIcon from './learning-header/x-white.png';
+ensureConfig(['LMS_BASE_URL', 'LOGOUT_URL', 'LOGIN_URL', 'SITE_NAME', 'LOGO_URL', 'ORDER_HISTORY_URL'], 'Header component');
+subscribe(APP_CONFIG_INITIALIZED, function () {
+  mergeConfig({
+    AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER
+  }, 'Header additional config');
+});
+var Header = function Header(_ref) {
+  var intl = _ref.intl;
+  var _useContext = useContext(AppContext),
+    authenticatedUser = _useContext.authenticatedUser,
+    config = _useContext.config;
+  var mainMenu = [{
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL),
+    // Homepage
+    content: intl.formatMessage(messages['header.links.home'])
+  }, {
+    type: 'item',
+    href: 'https://savolaworld.com/Makeen.php',
+    // External About page
+    content: intl.formatMessage(messages['header.links.about'])
+  }, {
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL, "/courses"),
+    // Courses page
+    content: intl.formatMessage(messages['header.links.courses'])
+  }, {
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL, "/contact"),
+    // Contact page
+    content: intl.formatMessage(messages['header.links.contact'])
+  }, {
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL, "/dashboard"),
+    // Dashboard page
+    content: intl.formatMessage(messages['header.links.dashboard']),
+    className: 'dashboard-link'
+  }];
+  var orderHistoryItem = {
+    type: 'item',
+    href: config.ORDER_HISTORY_URL,
+    content: intl.formatMessage(messages['header.user.menu.order.history'])
+  };
+  var userMenu = authenticatedUser === null ? [] : [{
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL, "/dashboard"),
+    content: intl.formatMessage(messages['header.user.menu.dashboard'])
+  }, {
+    type: 'item',
+    href: "".concat(config.ACCOUNT_PROFILE_URL, "/u/").concat(authenticatedUser.username),
+    content: intl.formatMessage(messages['header.user.menu.profile'])
+  }, {
+    type: 'item',
+    href: config.ACCOUNT_SETTINGS_URL,
+    content: intl.formatMessage(messages['header.user.menu.account.settings'])
+  }, {
+    type: 'item',
+    href: config.LOGOUT_URL,
+    content: intl.formatMessage(messages['header.user.menu.logout'])
+  }];
+
+  // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
+  if (config.ORDER_HISTORY_URL) {
+    userMenu.splice(-1, 0, orderHistoryItem);
+  }
+  var loggedOutItems = [{
+    type: 'item',
+    href: config.LOGIN_URL,
+    content: intl.formatMessage(messages['header.user.menu.login'])
+  }, {
+    type: 'item',
+    href: "".concat(config.LMS_BASE_URL, "/register"),
+    content: intl.formatMessage(messages['header.user.menu.register'])
+  }];
+  var props = {
+    logo: config.LOGO_URL,
+    logoAltText: config.SITE_NAME,
+    logoDestination: "".concat(config.LMS_BASE_URL, "/dashboard"),
+    loggedIn: authenticatedUser !== null,
+    username: authenticatedUser !== null ? authenticatedUser.username : null,
+    avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
+    mainMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : mainMenu,
+    userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,
+    loggedOutItems: getConfig().AUTHN_MINIMAL_HEADER ? [] : loggedOutItems
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "top-bar d-flex justify-content-center justify-content-md-end align-items-center px-3"
+  }, /*#__PURE__*/React.createElement("ul", {
+    className: "social-icons list-unstyled d-flex mb-0"
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://www.youtube.com/channel/UCVAsDJMQH3hEaIjw1MOj49w",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: youtubeIcon,
+    alt: "YouTube"
+  }))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://www.facebook.com/share/19a69yGvsH/",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: facebookIcon,
+    alt: "Facebook"
+  }))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://www.instagram.com/savolaworld/#",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: instagramIcon,
+    alt: "Instagram"
+  }))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://www.linkedin.com/company/savolaworld/",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: linkedinIcon,
+    alt: "LinkedIn"
+  }))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "https://x.com/savolaworld?lang=en",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: xIcon,
+    alt: "X"
+  }))))), /*#__PURE__*/React.createElement(Responsive, {
+    maxWidth: 768
+  }, /*#__PURE__*/React.createElement(MobileHeader, props)), /*#__PURE__*/React.createElement(Responsive, {
+    minWidth: 769
+  }, /*#__PURE__*/React.createElement(DesktopHeader, props)));
+};
+Header.propTypes = {
+  intl: intlShape.isRequired
+};
+export default injectIntl(Header);
+//# sourceMappingURL=Header.js.map
