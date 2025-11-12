@@ -15,6 +15,12 @@ import MobileHeader from './MobileHeader';
 
 import messages from './Header.messages';
 
+import youtubeIcon from './learning-header/youtube-white.png';
+import facebookIcon from './learning-header/facebook-white.png';
+import instagramIcon from './learning-header/instagram-white.png';
+import linkedinIcon from './learning-header/linkedin-white.png';
+import xIcon from './learning-header/x-white.png';
+
 ensureConfig([
   'LMS_BASE_URL',
   'LOGOUT_URL',
@@ -126,6 +132,18 @@ const Header = ({ intl }) => {
 
   return (
     <>
+    {/* --- Grey Top Bar with Social Icons --- */}
+    <div className="top-bar d-flex justify-content-center justify-content-md-end align-items-center px-3">
+      <ul className="social-icons list-unstyled d-flex mb-0">
+        <li><a href="https://www.youtube.com/channel/UCVAsDJMQH3hEaIjw1MOj49w" target="_blank" rel="noopener noreferrer"><img src={youtubeIcon} alt="YouTube" /></a></li>
+        <li><a href="https://www.facebook.com/share/19a69yGvsH/" target="_blank" rel="noopener noreferrer"><img src={facebookIcon} alt="Facebook" /></a></li>
+        <li><a href="https://www.instagram.com/savolaworld/#" target="_blank" rel="noopener noreferrer"><img src={instagramIcon} alt="Instagram" /></a></li>
+        <li><a href="https://www.linkedin.com/company/savolaworld/" target="_blank" rel="noopener noreferrer"><img src={linkedinIcon} alt="LinkedIn" /></a></li>
+        <li><a href="https://x.com/savolaworld?lang=en" target="_blank" rel="noopener noreferrer"><img src={xIcon} alt="X" /></a></li>
+      </ul>
+    </div>
+
+      {/* --- End Top Bar --- */}
       <Responsive maxWidth={768}>
         <MobileHeader {...props} />
       </Responsive>

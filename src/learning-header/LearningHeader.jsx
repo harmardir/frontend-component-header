@@ -8,6 +8,12 @@ import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 
+import youtubeIcon from './youtube-white.png';
+import facebookIcon from './facebook-white.png';
+import instagramIcon from './instagram-white.png';
+import linkedinIcon from './linkedin-white.png';
+import xIcon from './x-white.png';
+
 const LinkedLogo = ({
   href,
   src,
@@ -77,6 +83,20 @@ const LearningHeader = ({
   return (
     <header className="learning-header">
       <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
+
+      {/* --- Grey Top Bar with Social Icons --- */}
+      <div className="top-bar d-flex justify-content-center justify-content-md-end align-items-center px-3">
+        <ul className="social-icons list-unstyled d-flex mb-0">
+          <li><a href="https://www.youtube.com/channel/UCVAsDJMQH3hEaIjw1MOj49w" target="_blank" rel="noopener noreferrer"><img src={youtubeIcon} alt="YouTube" /></a></li>
+          <li><a href="https://www.facebook.com/share/19a69yGvsH/" target="_blank" rel="noopener noreferrer"><img src={facebookIcon} alt="Facebook" /></a></li>
+          <li><a href="https://www.instagram.com/savolaworld/#" target="_blank" rel="noopener noreferrer"><img src={instagramIcon} alt="Instagram" /></a></li>
+          <li><a href="https://www.linkedin.com/company/savolaworld/" target="_blank" rel="noopener noreferrer"><img src={linkedinIcon} alt="LinkedIn" /></a></li>
+          <li><a href="https://x.com/savolaworld?lang=en" target="_blank" rel="noopener noreferrer"><img src={xIcon} alt="X" /></a></li>
+        </ul>
+      </div>
+      {/* --- End Top Bar --- */}
+
+
       <div className="container-xl py-2 d-flex align-items-center">
         {headerLogo}
 

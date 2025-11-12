@@ -118,3 +118,50 @@ $white: #fff;
     border-radius: $rounded-pill;
   }
 }
+
+
+.learning-header {
+  .top-bar {
+    background-color: #555555;
+    padding: 6px 0;
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+
+      li a img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1); /* make icons white */
+        transition: opacity 0.3s ease;
+      }
+
+      li a:hover img {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+
+.top-bar {
+  background-color: #555555;
+  padding: 6px 0;
+
+  .social-icons {
+    display: flex;
+    gap: 10px;
+
+    li a img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1); /* make icons white */
+      transition: opacity 0.3s ease;
+    }
+
+    li a:hover img {
+      opacity: 0.7;
+    }
+  }
+}
+
